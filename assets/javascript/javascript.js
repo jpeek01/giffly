@@ -4,7 +4,7 @@ var gifApiReturn = {
     queryURLTypeTrending: "trending",
     queryURLTypeSearch: "search",
     apiKey: "api_key=gOMoKMxetAwahMVySpLTNNM5nOv2LI9R",
-    limit: 5,
+    limit: 10,
     gifArray: {},
 
     getGifs: function(queryURL) {
@@ -13,9 +13,15 @@ var gifApiReturn = {
             url: queryURL,
             method: "GET"
             }).then(function(response) {
-                for (i = 0; i < response.length; i++) {
-                    gif = $("<img>").attr("src", response.data[i].embed_url)
-                    holder.append(gif);
+                console.log(response);
+                gifApiReturn.gifArray = response.data;
+
+                for (i = 0; i < gifApiReturn.gifArray.length; i++) {
+                    var gifDiv = $("<div class='item'>");
+                    var gif = $("<img>");
+                    gif.attr("src", gifApiReturn.gifArray[i].images.fixed_height.url)
+                    gifDiv.append(gif);
+                    $("#gifDisplay").prepend(gifDiv);
                 }
             });
     },
@@ -26,8 +32,10 @@ var gifApiReturn = {
                 gifApiReturn.apiKey;
             return gifApiReturn.queryURL;
         } else if (queryURLType == "search") {
-            queryURL = "https://api.giphy.com/v1/gifs/" + queryURLType + "?q=" + searchParameter +
-                gifApiReturn.apiKey + "&limit=" + limit;
+            gifApiReturn.queryURL = "https://api.giphy.com/v1/gifs/" + queryURLType + "?q=" + searchParameter +
+                "&" + gifApiReturn.apiKey + 
+                "&limit=" + limit;
+                console.log(gifApiReturn.queryURL);
             return gifApiReturn.queryURL;
         }
     }
@@ -41,22 +49,11 @@ var userData = {
 
 
 $(document).ready(function() {
-    var test1 = "laugh";
-    var builtQueryURL = gifApiReturn.buildQueryString(test1,gifApiReturn.queryURLTypeTrending,gifApiReturn.limit);
-    // var returnedGifs = gifApiReturn.getGifs(builtQueryURL);
-    // displayGifs(returnedGifs);
-    // console.log(returnedGifs);
+    var test1 = "seinfeld";
+    var builtQueryURL = gifApiReturn.buildQueryString(test1,gifApiReturn.queryURLTypeSearch,gifApiReturn.limit);
+    gifApiReturn.getGifs(builtQueryURL);
 
 });
 
-
-// function displayGifs(returnedGifs) {
-//     var holder = $("<div>")
-//     var gif;
-//     for (i = 0; i < returnedGifs.length; i++) {
-//         gif = $("<img>").attr("src", returnedGifs.data[i].embed_url)
-//         holder.append(gif);
-//     }
-// }
 
 
