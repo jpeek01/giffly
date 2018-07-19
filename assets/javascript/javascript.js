@@ -4,7 +4,7 @@ var gifApiReturn = {
     queryURLTypeTrending: "trending",
     queryURLTypeSearch: "search",
     apiKey: "api_key=gOMoKMxetAwahMVySpLTNNM5nOv2LI9R",
-    limit: 10,
+    limit: 2,
     gifArray: {},
 
     getGifs: function(queryURL) {
@@ -20,6 +20,7 @@ var gifApiReturn = {
                     var gifDiv = $("<div class='item'>");
                     var gif = $("<img>");
                     gif.attr("src", gifApiReturn.gifArray[i].images.fixed_height.url)
+                    alert(gifApiReturn.gifArray[i].images.fixed_height.url);
                     gifDiv.append(gif);
                     $("#gifDisplay").prepend(gifDiv);
                 }
@@ -49,10 +50,16 @@ var userData = {
 
 
 $(document).ready(function() {
-    var test1 = "seinfeld";
-    var builtQueryURL = gifApiReturn.buildQueryString(test1,gifApiReturn.queryURLTypeSearch,gifApiReturn.limit);
-    gifApiReturn.getGifs(builtQueryURL);
 
+    $("#retrieveGifs").click(function() {
+        var searchTerm = $("#searchTerm").val();
+        var builtQueryURL = gifApiReturn.buildQueryString(searchTerm,gifApiReturn.queryURLTypeSearch,gifApiReturn.limit);
+        gifApiReturn.getGifs(builtQueryURL);
+    });
+
+    // var searchTerm = "seinfeld";
+    // var builtQueryURL = gifApiReturn.buildQueryString(searchTerm,gifApiReturn.queryURLTypeSearch,gifApiReturn.limit);
+    // gifApiReturn.getGifs(builtQueryURL);
 });
 
 
