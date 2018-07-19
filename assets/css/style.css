@@ -1,6 +1,22 @@
+body {
+    background-color: #3e3d3e;
+}
+
 .header {
-    margin: 10px auto;
-    text-align: center;
+    margin: 20px auto;
+}
+
+#logo {
+    background-image: url("../images/wall.jpg");
+    background-repeat: repeat;
+    text-align: left;
+    font-family: 'Permanent Marker', serif;
+    font-size: 48pt;
+    color: firebrick;
+}
+
+#logoImage {
+    margin-left: 50px;
 }
 
 #logo {
@@ -15,6 +31,24 @@
     border-radius: 10px;
 }
 
+#searchTerm {
+    width: 300px;
+}
 
+.form-group {
+    margin: 15px 0px;
+}
 
+.dropdown {
+    margin: 15px 0px;
+}
 
+#gifDisplay {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.gifs {
+    margin: 10px;
+}
