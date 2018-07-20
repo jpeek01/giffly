@@ -14,17 +14,20 @@ var gifApiReturn = {
             method: "GET"
             }).then(function(response) {
                 console.log(response);
+
                 gifApiReturn.gifArray = response.data;
 
+        // Display all the gifs returned in the object that are now in the array
                 for (i = 0; i < gifApiReturn.gifArray.length; i++) {
-                    var gifDiv = $("<div class='item'>");
-                    var gif = $("<img class='gif'>");
-                    gif.attr("src", gifApiReturn.gifArray[i].images.fixed_height_still.url)
-                    gif.attr("data-still",gifApiReturn.gifArray[i].images.fixed_height_still.url);
-                    gif.attr("data-animate",gifApiReturn.gifArray[i].images.fixed_height.url);
-                    gif.attr("data_state", "still");
-                    gifDiv.append(gif);
-                    $("#gifDisplay").append(gifDiv);
+                    var gifs = $("<img class='gifs'>");
+                //set the attributes for the url so it's still when first display but user can click to animate
+                    gifs.attr("src", gifApiReturn.gifArray[i].images.fixed_height_still.url)
+                    gifs.attr("data-still",gifApiReturn.gifArray[i].images.fixed_height_still.url);
+                    gifs.attr("data-animate",gifApiReturn.gifArray[i].images.fixed_height.url);
+                    gifs.attr("data-state", "still");
+
+                //put the item divs in the main div that has flex box style
+                    $("#gifDisplay").append(gifs);
                 }
             });
     },
@@ -83,26 +86,21 @@ $(document).ready(function() {
 
     $("#topicMenu").on("click",function(event) {
         var menuItemText = $(event.target).text()
-        console.log(menuItemText);
         $("#searchTerm").val(menuItemText);
         $("#gifDisplay").empty();
         var builtQueryURL = gifApiReturn.buildQueryString(menuItemText,gifApiReturn.queryURLTypeSearch,gifApiReturn.limit);
         gifApiReturn.getGifs(builtQueryURL);
     });
 
-    $(".gif").on("click", function() {
+    $(document.body).on("click", ".gifs", function() {
         var state = $(this).attr("data-state");
-        console.log("gif on click");
-        alert("test");
 
         if (state === "still") {
             $(this).attr("src", $(this).attr("data-animate"));
             $(this).attr("data-state", "animate");
-            console.log("animate");
         } else {
             $(this).attr("src", $(this).attr("data-still"));
             $(this).attr("data-state", "still");
-            console.log("still");
         }
     });
 });
