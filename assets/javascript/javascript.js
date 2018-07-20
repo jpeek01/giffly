@@ -4,7 +4,7 @@ var gifApiReturn = {
     queryURLTypeTrending: "trending",
     queryURLTypeSearch: "search",
     apiKey: "api_key=gOMoKMxetAwahMVySpLTNNM5nOv2LI9R",
-    limit: 25,
+    limit: 10,
     gifArray: {},
 
     getGifs: function(queryURL) {
@@ -18,8 +18,11 @@ var gifApiReturn = {
 
                 for (i = 0; i < gifApiReturn.gifArray.length; i++) {
                     var gifDiv = $("<div class='item'>");
-                    var gif = $("<img class='gifs'>");
-                    gif.attr("src", gifApiReturn.gifArray[i].images.fixed_height.url)
+                    var gif = $("<img class='gif'>");
+                    gif.attr("src", gifApiReturn.gifArray[i].images.fixed_height_still.url)
+                    gif.attr("data-still",gifApiReturn.gifArray[i].images.fixed_height_still.url);
+                    gif.attr("data-animate",gifApiReturn.gifArray[i].images.fixed_height.url);
+                    gif.attr("data_state", "still");
                     gifDiv.append(gif);
                     $("#gifDisplay").append(gifDiv);
                 }
@@ -85,6 +88,22 @@ $(document).ready(function() {
         $("#gifDisplay").empty();
         var builtQueryURL = gifApiReturn.buildQueryString(menuItemText,gifApiReturn.queryURLTypeSearch,gifApiReturn.limit);
         gifApiReturn.getGifs(builtQueryURL);
+    });
+
+    $(".gif").on("click", function() {
+        var state = $(this).attr("data-state");
+        console.log("gif on click");
+        alert("test");
+
+        if (state === "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "animate");
+            console.log("animate");
+        } else {
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-state", "still");
+            console.log("still");
+        }
     });
 });
 
