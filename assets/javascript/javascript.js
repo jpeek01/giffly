@@ -19,6 +19,8 @@ var gifApiReturn = {
 
         // Display all the gifs returned in the object that are now in the array
                 for (i = 0; i < gifApiReturn.gifArray.length; i++) {
+                    var gifsDiv = $("<div class='gifDiv'>");
+                    var ratingText = $("<p>");
                     var gifs = $("<img class='gifs'>");
                 //set the attributes for the url so it's still when first display but user can click to animate
                     gifs.attr("src", gifApiReturn.gifArray[i].images.fixed_height_still.url)
@@ -26,8 +28,11 @@ var gifApiReturn = {
                     gifs.attr("data-animate",gifApiReturn.gifArray[i].images.fixed_height.url);
                     gifs.attr("data-state", "still");
 
-                //put the item divs in the main div that has flex box style
-                    $("#gifDisplay").append(gifs);
+                //put the gifDiv divs in the main div that has flex box style
+                    ratingText.text("Rating: " + gifApiReturn.gifArray[i].rating)
+                    gifsDiv.append(ratingText);
+                    gifsDiv.append(gifs);
+                    $("#gifDisplay").append(gifsDiv);
                 }
             });
     },
@@ -53,9 +58,12 @@ var userData = {
 
     saveTopic: function(topic) {
         var topicMenuItem = $("<button class='dropdown-item' type='button'>");
-        $("#topicMenu").append(topicMenuItem);
-        topicMenuItem.text(topic);
-        userData.userTopics.push(topic);
+
+        if (userData.userTopics.indexOf(topic) === -1) {
+            $("#topicMenu").append(topicMenuItem);
+            topicMenuItem.text(topic);   
+            userData.userTopics.push(topic);
+        }
 
         //logging to the console for troubleshooting purposes
         console.log("topic " + topic + " saved")
@@ -86,7 +94,7 @@ $(document).ready(function() {
 
     $("#topicMenu").on("click",function(event) {
         var menuItemText = $(event.target).text()
-        $("#searchTerm").val(menuItemText);
+        $("#searchTerm").val(menuItemText).trim();
         $("#gifDisplay").empty();
         var builtQueryURL = gifApiReturn.buildQueryString(menuItemText,gifApiReturn.queryURLTypeSearch,gifApiReturn.limit);
         gifApiReturn.getGifs(builtQueryURL);

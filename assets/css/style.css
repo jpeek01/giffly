@@ -43,12 +43,46 @@ body {
     margin: 15px 0px;
 }
 
+#topicMenu {
+    /* padding: 5px; */
+}
+
 #gifDisplay {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    padding: 5px;
+    font-family: Oxygen, sans-serif;
+    font-weight: 100;
+    color: whitesmoke;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.gifDiv {
+    margin: 5px;
 }
 
 .gifs {
-    margin: 10px;
+    margin-bottom: 5px;
+}
+
+.dropdown-item:hover {
+    background-color: #488AC7;
+    color: whitesmoke;
+}
+
+.btn-primary {
+    background-color: #488AC7;
+}
+
+.btn-primary:hover {
+    background-color: #357EC7;
+}
+
+.btn-primary:active {
+    background-color: #1569C7;
 }
