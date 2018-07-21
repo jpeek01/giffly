@@ -94,7 +94,7 @@ $(document).ready(function() {
 
     $("#topicMenu").on("click",function(event) {
         var menuItemText = $(event.target).text()
-        $("#searchTerm").val(menuItemText).trim();
+        $("#searchTerm").val(menuItemText);
         $("#gifDisplay").empty();
         var builtQueryURL = gifApiReturn.buildQueryString(menuItemText,gifApiReturn.queryURLTypeSearch,gifApiReturn.limit);
         gifApiReturn.getGifs(builtQueryURL);
